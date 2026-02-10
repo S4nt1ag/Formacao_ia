@@ -1,0 +1,53 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# =========================
+# Ambiente virtual (venv)
+# =========================
+venv/
+.venv/
+env/
+tic_trilhas1_aula1/
+
+# =========================
+# Variáveis de ambiente / segredos
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+.history/
+
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs e temporários
+# =========================
+*.log
+*.tmp
+*.bak
+
+# =========================
+# Jupyter / cache
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Build / distribuição
+# =========================
+build/
+dist/
+*.egg-info/
