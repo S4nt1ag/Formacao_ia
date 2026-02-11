@@ -1,0 +1,14 @@
+# Ambiente virtual
+aula_tres_trilha/
+.venv/
+venv/
+
+# Variáveis de ambiente
+.env
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
