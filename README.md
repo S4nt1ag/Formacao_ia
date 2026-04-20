@@ -4,12 +4,14 @@ Repositório de estudos e práticas da **Formação em IA**, com exemplos em Pyt
 
 ## O que tem aqui
 
+- **Monitoria / Monitoria 01**: projeto básico em Python com operações matemáticas, módulos, funções e geração de gráficos com Matplotlib.
 - **Trilha 01 / Módulo 02**: primeiros exemplos de chamadas a LLM e composição de prompts/chains.
 - **Trilha 01 / Módulo 03**: apps com **Streamlit**:
   - chat simples com LLM
   - chatbot com **memória/histórico**
   - perguntas e respostas sobre **PDF**
-  - versão com **streaming** (resposta “ao vivo”)
+  - versão com **streaming** (resposta "ao vivo")
+- **Trilha 02 / Módulo 01**: app Streamlit comparando respostas de LLM com e sem contexto sobre energia solar no Brasil.
 
 ## Requisitos
 
@@ -18,7 +20,11 @@ Repositório de estudos e práticas da **Formação em IA**, com exemplos em Pyt
 
 ## Instalação
 
-O arquivo de dependências desta etapa está em `trilha01/modulo03/requirements.txt`.
+Os arquivos de dependências estão localizados em cada módulo/trilha. Por exemplo:
+
+- `trilha01/modulo03/requirements.txt` para apps Streamlit
+- `trilha02/requirements.txt` para o app de comparação
+- `Monitoria/monitoria01/bibliotecas.txt` para o projeto básico (lista de bibliotecas)
 
 ```bash
 python -m venv .venv
@@ -28,7 +34,7 @@ Windows (PowerShell):
 
 ```powershell
 .venv\Scripts\Activate.ps1
-pip install -r trilha01\modulo03\requirements.txt
+pip install -r [caminho/do/requirements.txt]
 ```
 
 ## Configuração (variáveis de ambiente)
@@ -85,23 +91,63 @@ streamlit run trilha01\modulo03\aula03\app.py
 streamlit run trilha01\modulo03\aula04\app.py
 ```
 
+### 6) Projeto Monitoria (operações básicas)
+
+```powershell
+python Monitoria\monitoria01\projeto-python\main.py
+```
+
+### 7) Gráfico Monitoria
+
+```powershell
+python Monitoria\monitoria01\projeto-python\grafico.py
+```
+
+### 8) Comparação com/sem contexto (Trilha 02)
+
+```powershell
+streamlit run trilha02\modulo01\app.py
+```
+
 ## Estrutura (principal)
 
 ```text
 Formacao_ia/
 ├─ README.md
-└─ trilha01/
-   ├─ modulo02/
-   │  ├─ aula01/ api_ia.py
-   │  ├─ aula02/ main.py, openroute_config.py
-   │  └─ aula03/ codigo.py
-   └─ modulo03/
-      ├─ requirements.txt
-      ├─ .gitignore
-      ├─ aula01/ app.py, exemple1.py
-      ├─ aula2/ app.py
-      ├─ aula03/ app.py
-      └─ aula04/ app.py
+├─ Monitoria/
+│  └─ monitoria01/
+│     ├─ bibliotecas.txt
+│     ├─ ambiente-virtual/
+│     └─ projeto-python/
+│        ├─ grafico.py
+│        ├─ main.py
+│        ├─ modulos.py
+│        └─ funcoes/
+│           └─ multiplicacao.py
+├─ trilha01/
+│  ├─ modulo02/
+│  │  ├─ aula01/
+│  │  │  └─ api_ia.py
+│  │  ├─ aula02/
+│  │  │  ├─ main.py
+│  │  │  └─ openroute_config.py
+│  │  └─ aula03/
+│  │     └─ codigo.py
+│  └─ modulo03/
+│     ├─ requirements.txt
+│     ├─ aula01/
+│     │  ├─ app.py
+│     │  └─ exemple1.py
+│     ├─ aula03/
+│     │  └─ app.py
+│     ├─ aula04/
+│     │  └─ app.py
+│     └─ aula2/
+│        └─ app.py
+└─ trilha02/
+   ├─ requirements.txt
+   └─ modulo01/
+      └─ app.py
 ```
 
 ## Notas importantes
