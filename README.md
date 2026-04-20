@@ -149,14 +149,3 @@ Formacao_ia/
    └─ modulo01/
       └─ app.py
 ```
-
-## Notas importantes
-
-- **Chaves e segredos**: não suba sua API key para o GitHub. Use variáveis de ambiente.
-- **Custos**: chamadas ao modelo podem gerar custo conforme o provedor/modelo escolhido.
-
-## Próximos passos (ideias)
-
-- Adicionar `.env.example` com as variáveis suportadas
-- Melhorar o Q&A de PDF com chunking + embeddings (RAG) para PDFs maiores
-- Adicionar testes e padronizar um `Makefile`/scripts de execução
