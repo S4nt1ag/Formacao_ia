@@ -1,0 +1,98 @@
+============================================================
+ETAPA 1: Conectando ao ChromaDB
+============================================================
+ChromaDB conectado!
+   Total de documentos: 53
+
+============================================================
+ETAPA 2: Criando o Retriever
+============================================================
+Retriever criado com k=3
+   MÃ©todo: similaridade (similarity search)
+
+============================================================
+ETAPA 3: Recuperando trechos relevantes
+============================================================
+Pergunta: O que e Inteligencia Artificial?
+
+Trechos recuperados:
+
+--- Documento 1 ---
+Conteudo (primeiros 300 caracteres):
+Since 2016, numerous AI ethics guidelines have been published in order to maintain social control over the technology. Furthermore, organizations deploying AI have a central role to play in creating and implementing trustworthy AI, adhering to established principles, and taking accountability for mi
+
+Metadados:
+   source: https://en.wikipedia.org/wiki/Regulation_of_artificial_intelligence
+   title: Regulation of artificial intelligence
+   summary: Regulation of artificial intelligence is the development of public sector policies and laws for promoting and regulating artificial intelligence (AI). The regulatory and policy landscape for AI is an emerging issue in jurisdictions worldwide, including for international organizations without direct enforcement power like the IEEE or the OECD.
+Since 2016, numerous AI ethics guidelines have been published in order to maintain social control over the technology. Furthermore, organizations deploying AI have a central role to play in creating and implementing trustworthy AI, adhering to established principles, and taking accountability for mitigating risks. The European Union adopted in 2024 a common legal framework for AI with the AI Act.
+   tema: Inteligência Artificial
+
+--- Documento 2 ---
+Conteudo (primeiros 300 caracteres):
+In a 2022 Ipsos survey, attitudes towards AI varied greatly by country; 78% of Chinese citizens, but only 35% of Americans, agreed that "products and services using AI have more benefits than drawbacks". Ipsos poll found that 61% of Americans agree, and 22% disagree, that AI poses risks to humanity
+
+Metadados:
+   summary: Regulation of artificial intelligence is the development of public sector policies and laws for promoting and regulating artificial intelligence (AI). The regulatory and policy landscape for AI is an emerging issue in jurisdictions worldwide, including for international organizations without direct enforcement power like the IEEE or the OECD.
+Since 2016, numerous AI ethics guidelines have been published in order to maintain social control over the technology. Furthermore, organizations deploying AI have a central role to play in creating and implementing trustworthy AI, adhering to established principles, and taking accountability for mitigating risks. The European Union adopted in 2024 a common legal framework for AI with the AI Act.
+   tema: Inteligência Artificial
+   title: Regulation of artificial intelligence
+   source: https://en.wikipedia.org/wiki/Regulation_of_artificial_intelligence
+
+--- Documento 3 ---
+Conteudo (primeiros 300 caracteres):
+A.I. Artificial Intelligence was released on June 29, 2001, by Warner Bros. Pictures. It received generally positive reviews from critics and grossed $235.9 million against a budget of $90–100 million. It was also nominated for Best Visual Effects and Best Original Score (for John Williams) at the 7
+
+Metadados:
+   title: A.I. Artificial Intelligence
+   source: https://en.wikipedia.org/wiki/A.I._Artificial_Intelligence
+   summary: A.I. Artificial Intelligence (or simply A.I.) is a 2001 science fiction drama film directed by Steven Spielberg. The screenplay by Spielberg and screen story by Ian Watson are loosely based on the 1969 short story "Supertoys Last All Summer Long" by Brian Aldiss. Set in a futuristic society, the film stars Haley Joel Osment as David, a childlike android uniquely programmed with the ability to love. Jude Law, Frances O'Connor, Brendan Gleeson and William Hurt star in supporting roles.
+Development of A.I. originally began after producer and director Stanley Kubrick acquired the rights to Aldiss's story in the early 1970s. Kubrick hired a series of writers, including Aldiss, Bob Shaw, Ian Watson and Sara Maitland, until the mid-1990s. The film languished in development hell for years, partly because Kubrick felt that computer-generated imagery was not advanced enough to create the David character, which he believed no child actor would convincingly portray. In 1995, Kubrick handed A.I. to Spielberg, but the film did not gain momentum until Kubrick died in 1999. Spielberg remained close to Watson's treatment for the screenplay and dedicated the film to Kubrick.
+A.I. Artificial Intelligence was released on June 29, 2001, by Warner Bros. Pictures. It received generally positive reviews from critics and grossed $235.9 million against a budget of $90–100 million. It was also nominated for Best Visual Effects and Best Original Score (for John Williams) at the 74th Academy Awards. In a 2016 BBC poll of 177 critics around the world, A.I. Artificial Intelligence was voted the eighty-third greatest film since 2000. It has since been called one of Spielberg's best works and one of the greatest films of the 21st century, and of all time.
+
+
+   tema: Inteligência Artificial
+
+============================================================
+ETAPA 4: Montando o prompt com contexto
+============================================================
+Prompt montado:
+----------------------------------------
+VocÃª Ã© um assistente de IA. Responda apenas com base nas informaÃ§Ãµes fornecidas.
+
+InformaÃ§Ãµes de contexto:
+--- Trecho 1 ---
+Since 2016, numerous AI ethics guidelines have been published in order to maintain social control over the technology. Furthermore, organizations deploying AI have a central role to play in creating and implementing trustworthy AI, adhering to established principles, and taking accountability for mitigating risks. The European Union adopted in 2024 a common legal fram...
+----------------------------------------
+
+============================================================
+ETAPA 5: Gerando respostas com LLM
+============================================================
+
+RESPOSTA COM CONTEXTO (RAG):
+----------------------------------------
+Inteligência Artificial refere-se à tecnologia que busca criar máquinas capazes de realizar atividades que normalmente requerem inteligência humana, como aprendizado, resolução de problemas, reconhecimento de padrões, entre outros. A IA pode trazer benefícios, mas também apresenta riscos para a humanidade, de acordo com pesquisas de opinião. O filme "A.I. Artificial Intelligence", lançado em 2001, aborda questões relacionadas à IA. Fontes: Trecho 1, Trecho 2, Trecho 3.
+----------------------------------------
+
+RESPOSTA SEM CONTEXTO:
+----------------------------------------
+Inteligência artificial (IA) é a capacidade de um sistema ou máquina de simular a capacidade humana de aprendizado, raciocínio, reconhecimento de padrões e tomada de decisões autônomas. A IA envolve a utilização de algoritmos e técnicas avançadas para que sistemas computacionais possam realizar tarefas que normalmente requerem inteligência humana. Exemplos de aplicações de IA incluem reconhecimento de voz, análise de dados, sistemas de recomendação, entre outros.
+----------------------------------------
+
+============================================================
+COMPARACAO FINAL
+============================================================
+
+Diferencas observadas:
+
+RESPOSTA COM CONTEXTO (RAG):
+   - Baseada nos documentos recuperados do ChromaDB
+   - Cita as fontes dos trechos utilizados
+   - Mais precisa e verificavel
+
+RESPOSTA SEM CONTEXTO:
+   - Baseada no conhecimento geral do modelo
+   - Pode conter informacoes desatualizadas
+   - Nao cita fontes especificas
+
+RAG completo executado com sucesso!
