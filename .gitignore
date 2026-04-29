@@ -1,0 +1,43 @@
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+**/venv/
+**/.venv/
+**/ambiente-virtual/
+
+# Environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+
+# Streamlit/local configs
+.streamlit/secrets.toml
+**/.streamlit/secrets.toml
+
+# ChromaDB and vector stores
+**/chroma_db/
+*.sqlite3
+*.bin
+
+# Tooling/test/cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE/system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
