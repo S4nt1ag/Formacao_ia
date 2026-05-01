@@ -41,3 +41,21 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Logs and runtime files
+*.log
+*.out
+*.tmp
+
+# Local data and generated artifacts
+**/db/
+**/data/
+**/tmp/
+
+# MCP local configuration with secrets
+**/mcp.json
+**/mcp.python3.json

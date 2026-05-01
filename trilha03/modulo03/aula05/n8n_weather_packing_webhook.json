@@ -1,0 +1,180 @@
+{
+  "name": "Weather & Packing Checklist (Webhook)",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "weather-packing-checklist",
+        "httpMethod": "POST",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "Webhook_Trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        200,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const body = $json.body ?? $json;\nconst itinerary = Array.isArray(body.itinerary) ? body.itinerary : [];\nif (!itinerary.length) {\n  throw new Error('Payload invalido. Esperado: { itinerary: [{ city, lat, lon, date }] }');\n}\nreturn itinerary.map((item, idx) => ({\n  json: {\n    index: idx,\n    city: item.city,\n    lat: Number(item.lat),\n    lon: Number(item.lon),\n    date: item.date\n  }\n}));"
+      },
+      "id": "Function_Parse_Input",
+      "name": "Parse Input",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        430,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "Split_In_Batches",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        650,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{`https://api.open-meteo.com/v1/forecast?latitude=${$json.lat}&longitude=${$json.lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,weathercode&timezone=auto&forecast_days=7`}}",
+        "options": {}
+      },
+      "id": "HTTP_Open_Meteo",
+      "name": "Open-Meteo Forecast",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        890,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const input = $items('Split In Batches', 0, 0)[0].json;\nconst d = $json.daily || {};\nconst dates = d.time || [];\nconst idx = Math.max(0, dates.indexOf(input.date));\nconst tempMax = (d.temperature_2m_max || [])[idx] ?? null;\nconst tempMin = (d.temperature_2m_min || [])[idx] ?? null;\nconst rainProb = (d.precipitation_probability_max || [])[idx] ?? null;\nconst uvMax = (d.uv_index_max || [])[idx] ?? null;\n\nconst checklist = [];\nif (tempMin !== null && tempMin < 15) checklist.push('Levar casaco');\nif (tempMax !== null && tempMax > 28) checklist.push('Levar roupas leves');\nif (rainProb !== null && rainProb >= 40) checklist.push('Levar guarda-chuva/capa de chuva');\nif (uvMax !== null && uvMax >= 6) checklist.push('Levar protetor solar');\nif (!checklist.length) checklist.push('Levar itens basicos para clima ameno');\n\nreturn [{\n  json: {\n    index: input.index,\n    city: input.city,\n    date: input.date,\n    forecast: {\n      temp_max_c: tempMax,\n      temp_min_c: tempMin,\n      rain_probability_max: rainProb,\n      uv_index_max: uvMax\n    },\n    checklist,\n    metadata: {\n      confidence: 'medium',\n      source: 'open-meteo.com',\n      generated_at: new Date().toISOString()\n    }\n  }\n}];"
+      },
+      "id": "Function_Checklist",
+      "name": "Build Checklist",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        1130,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const rows = items.map(i => i.json).sort((a, b) => a.index - b.index);\nreturn [{\n  json: {\n    itinerary_weather: rows.map(r => ({\n      city: r.city,\n      date: r.date,\n      forecast: r.forecast\n    })),\n    checklists: rows.map(r => ({\n      city: r.city,\n      date: r.date,\n      items: r.checklist,\n      metadata: r.metadata\n    }))\n  }\n}];"
+      },
+      "id": "Function_Aggregate",
+      "name": "Aggregate Results",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        1370,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {}
+      },
+      "id": "Respond_To_Webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1590,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Input": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Open-Meteo Forecast",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Open-Meteo Forecast": {
+      "main": [
+        [
+          {
+            "node": "Build Checklist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Checklist": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Results",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate Results": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

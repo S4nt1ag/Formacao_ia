@@ -1,28 +1,15 @@
-# Dependências do Projeto RAG - Módulo 02
-# Instalação: pip install -r requirements.txt
-
-# LangChain e componentes
 langchain>=0.3.0
 langchain-community>=0.3.0
 langchain-core>=0.3.0
 langchain-openai>=0.3.0
 langchain-huggingface>=0.3.0
 langchain-text-splitters>=0.3.0
-
-# Wikipedia
-wikipedia>=1.4.0
-
-# Embeddings
-sentence-transformers>=2.0.0
-
-# Banco vetorial
-chromadb>=0.5.0
-
-# Orquestração
 langgraph>=0.2.0
-
-# Interface (opcional)
 streamlit>=1.40.0
-
-# Utilitários
 python-dotenv>=1.0.0
+wikipedia>=1.4.0
+sentence-transformers>=2.0.0
+chromadb>=0.5.0
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+pypdf>=4.0.0
